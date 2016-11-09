@@ -19,23 +19,14 @@ class CustomInfoWindow: UIView {
     @IBOutlet weak var ivCoverPhoto: UIImageView!
     var place:Place!{
         didSet{
-            ivCoverPhoto.layer.cornerRadius = ivCoverPhoto.bounds.size.width / 2
-            ivCoverPhoto.layer.masksToBounds  = true
-            
-            vCoverPhoto.layer.cornerRadius = vCoverPhoto.bounds.size.width / 2
-            vCoverPhoto.layer.masksToBounds  = true
             
             vInfo.layer.cornerRadius = 5
             vInfo.layer.masksToBounds = true
+            vInfo.clipsToBounds = true
 
             
             self.nameLabel.text = place.name
             
-            if let url = URL(string: "http://dulichhanoi.vn/wp-content/uploads/2014/04/ba-na-hills-da-nang.jpg") {
-                if let data = NSData(contentsOf: url) {
-                    self.ivCoverPhoto.image = UIImage(data: data as Data)
-                }        
-            }
             
            self.layoutIfNeeded()
         }

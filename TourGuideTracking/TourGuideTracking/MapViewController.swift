@@ -14,8 +14,22 @@ import SwiftR
 class MapViewController: UIViewController {
 
 
+    @IBOutlet weak var ivTest1: UIImageView!
     @IBOutlet weak var displaySegmented: UISegmentedControl!
     @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var vWarning: UIView!
+    
+    @IBOutlet weak var tvWarning: UITextView!
+    
+    @IBOutlet weak var btnSendWarning: UIButton!
+    @IBOutlet weak var consTopVWarning: NSLayoutConstraint!
+    
+    @IBOutlet weak var consBottomInformWarningOption: NSLayoutConstraint!
+    @IBOutlet weak var vBackgroundWarning: UIView!
+    
+
+   
+
     var tour:Tour!
     var markerSelected:Any!
     var chatHub: Hub?
@@ -34,8 +48,23 @@ class MapViewController: UIViewController {
         connectServer()
         //displaySegmented.selectedSegmentIndex = 0
         self.mapView.delegate = self
+        
+        InitView()
+
+        
         getPlacesLocation()
+        
+        
     }
+  
+    func InitView()
+    {
+        tvWarning.layer.borderColor = UIColor.lightGray.cgColor
+        tvWarning.layer.borderWidth = 0.5
+        tvWarning.layer.cornerRadius = 5
+        tvWarning.layer.masksToBounds = true
+    }
+    
     @IBAction func displayLocationSegmentedValueChanged(_ sender: AnyObject) {
         if displaySegmented.selectedSegmentIndex == 0{
             if (Singleton.sharedInstance.places?.count == 0){
@@ -55,6 +84,7 @@ class MapViewController: UIViewController {
         }
     }
     
+
     
     //get tour location
     func getPlacesLocation(){
@@ -177,7 +207,89 @@ class MapViewController: UIViewController {
     func updateLocation(latitude:Double, longitude:Double){
             chatHub?.invoke("updateLocation", arguments: [latitude, longitude])
     }
+    
+    
+    // MARK Popup warning
+    
+    @IBAction func closeWarningPopup(_ sender: Any) {
+        HiddenWarningPopup()
+        
+    }
+    
+    @IBAction func sendWarningForTourist(_ sender: Any) {
+        
+        HiddenInformWarningOption()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.ShowWarningPopup()
+        })
+        
+        
+    }
+    
+    func ShowWarningPopup() {
+        
+        vBackgroundWarning.isHidden = false
+        UIView.animate(withDuration: 0.5, animations:
+            {
+                //self.vWarning.isHidden = false
+                self.consTopVWarning.constant = 100
+                self.view.layoutIfNeeded();
+        })
+    }
+    
+    func HiddenWarningPopup() {
+        
+        UIView.animate(withDuration: 0.5, animations:
+            {
+                self.consTopVWarning.constant = -300
+                self.view.layoutIfNeeded();
+        }, completion: { finished in
+                self.vBackgroundWarning.isHidden = true
+        })
+        
+        view.endEditing(true)
+        
+    }
+    
+    // MARK Inform Warning Option
+    
+    @IBAction func informWarningOption(_ sender: Any) {
+        
+        HiddenWarningPopup()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.ShowInformWarningOption()
+        })
+        
+    }
+    
+    func ShowInformWarningOption() {
+        
+        
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                
+                self.consBottomInformWarningOption.constant = 0
+                self.view.layoutIfNeeded();
+        })
+        vBackgroundWarning.isHidden = false
+    }
+    
+    func HiddenInformWarningOption() {
+        
+        
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.consBottomInformWarningOption.constant = -208
+                self.view.layoutIfNeeded();
 
+        }, completion: { finished in
+                self.vBackgroundWarning.isHidden = true
+        })
+    }
+    
+    @IBAction func closeAllPopup(_ sender: Any) {
+        HiddenInformWarningOption()
+    }
     
 }
 
@@ -245,16 +357,79 @@ extension MapViewController: GMSMapViewDelegate{
         marker.userData = data
         
         if isTourist{
-             marker.icon = UIImage(named: "2")
+            
+            let ivmarker = UIImage(named: "2")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
+            
+            
         }else{
             
-           
-            marker.icon = UIImage(named: "3")
+            let ivmarker = UIImage(named: "3")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
         }
+        
         return marker
     }
+    
+    func drawMarker(marker: GMSMarker ,image: UIImage, markerImage: UIImage ) {
+        
+        let markerWidth  = 64
+        let markerHeight = 76
+        
+        let imageWith = 58
+        let topSpace = 3
+        
+        if(image == nil && markerImage == nil)
+        {
+            return
+        }
+        
+        let vTemp = UIView(frame: CGRect(x: 0, y: 0, width: markerWidth, height: markerHeight))
+        vTemp.backgroundColor = UIColor.clear
+        
+        let ivMarker = UIImageView(frame: CGRect(x: 0, y: 0, width: markerWidth, height: markerHeight))
+        ivMarker.backgroundColor = UIColor.clear
+        
+        
+        
+        let ivPhoto = UIImageView(frame: CGRect(x: topSpace, y: topSpace, width: imageWith, height: imageWith))
+        ivPhoto.backgroundColor = UIColor.clear
+        ivPhoto.contentMode = UIViewContentMode.scaleAspectFill
+        ivPhoto.clipsToBounds = true
+        ivPhoto.layer.cornerRadius = ivPhoto.frame.size.width / 2
+        ivPhoto.layer.masksToBounds = true
+        
+        
+        vTemp.addSubview(ivPhoto)
+        vTemp.addSubview(ivMarker)
+        
+        ivMarker.image = markerImage
+        ivPhoto.image = image
+        
+        //vTest = vTemp
+        
+        
+        UIGraphicsBeginImageContextWithOptions(vTemp.bounds.size, false, image.scale)
+        vTemp.layer.render(in: UIGraphicsGetCurrentContext()!)
+        
+        let finalImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
 
+        
+        marker.icon = finalImage
+        
+        
+    }
+    
 }
+
+
+
 
 extension MapViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

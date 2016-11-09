@@ -34,5 +34,5 @@ struct CellIdentifier{
 }
 
 struct API_KEYs{
-    static let GoogleMap:String = "AIzaSyDCN4X9NUjNF_WX1sHq1WSUVK9PObdIC-s"
+    static let GoogleMap:String = "AIzaSyCmmZj3F82dTWCuFOi416A-fX1gXNC2ZzM"
 }

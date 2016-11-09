@@ -96,6 +96,7 @@ class MyToursViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func toursGet(){
         MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         NetworkService<Tour>.makeGetRequest(URL: URLs.makeURL_EXTEND(url:URLs.URL_GET_TOURGUIDE, extend: URL_EXTEND.TOURS, param: (Singleton.sharedInstance.tourguide?.tourGuideId)!)){
             response, error in
             if error == nil{

@@ -21,22 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //init googlemap
         GMSServices.provideAPIKey(API_KEYs.GoogleMap)
         
-        //check logged in already
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        
-//        Settings.tourguide_id = UserDefaults.standard.integer(forKey: Keys.TOURGUIDE_ID)
-//        Settings.tourguide_accesstoken = UserDefaults.standard.string(forKey: Keys.TOURGUIDE_ACCESSTOKEN)
-//        
-//        if Settings.tourguide_id != nil
-//            && Settings.tourguide_accesstoken != nil {
-//            // currentUser is not nil
-//            // set up app for valid in user
-//           self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: ViewIdentifier.MYTOURS_VIEW)
-//        } /*else { // there is no current user
-//            // set up app for new or non logged in user
-//            self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: ViewIdentifier.LOGIN_VIEW)
-//            return true
-//        }*/
+        //check; logged in already
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        Settings.tourguide_id = UserDefaults.standard.integer(forKey: Keys.TOURGUIDE_ID)
+        Settings.tourguide_accesstoken = UserDefaults.standard.string(forKey: Keys.TOURGUIDE_ACCESSTOKEN)
+        
+        if Settings.tourguide_id != nil
+            && Settings.tourguide_accesstoken != nil {
+            // currentUser is not nil
+            // set up app for valid in user
+           self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: ViewIdentifier.MYTOURS_VIEW)
+        } /*else { // there is no current user
+            // set up app for new or non logged in user
+            self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: ViewIdentifier.LOGIN_VIEW)
+            return true
+        }*/
         return true
     }
 

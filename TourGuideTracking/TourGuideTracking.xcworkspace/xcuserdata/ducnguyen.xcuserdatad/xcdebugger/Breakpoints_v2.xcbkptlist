@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TourGuideTracking/MyToursViewController.swift"
-            timestampString = "500225430.128837"
+            filePath = "TourGuideTracking/TouristInfoWindow.swift"
+            timestampString = "500391586.839674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "toursGet()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TourGuideTracking/MyToursViewController.swift"
-            timestampString = "500225903.353433"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "tourGuideGet()"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "TestClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
