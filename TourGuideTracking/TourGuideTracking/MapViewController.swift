@@ -40,6 +40,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.hidesBottomBarWhenPushed = true
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -147,12 +148,12 @@ class MapViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if self.displaySegmented.selectedSegmentIndex == 0{
-            let placeDetailsVC = segue.destination as! PlaceDetailsViewController
-            placeDetailsVC.place = markerSelected as! Place
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if self.displaySegmented.selectedSegmentIndex == 0{
+//            let placeDetailsVC = segue.destination as! PlaceDetailsViewController
+//            placeDetailsVC.place = markerSelected as! Place
+//        }
+//    }
     
     func connectServer(){
         SwiftR.useWKWebView = false
