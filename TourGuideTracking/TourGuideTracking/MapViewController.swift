@@ -18,24 +18,19 @@ class MapViewController: UIViewController {
     @IBOutlet weak var displaySegmented: UISegmentedControl!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var vWarning: UIView!
-    
     @IBOutlet weak var tvWarning: UITextView!
-    
     @IBOutlet weak var btnSendWarning: UIButton!
     @IBOutlet weak var consTopVWarning: NSLayoutConstraint!
-    
-    @IBOutlet weak var consBottomInformWarningOption: NSLayoutConstraint!
     @IBOutlet weak var vBackgroundWarning: UIView!
-    
 
-   
 
     var tour:Tour!
     var markerSelected:Any!
     var chatHub: Hub?
     var connection: SignalR?
-    
     var locationManager:CLLocationManager = CLLocationManager();
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +47,17 @@ class MapViewController: UIViewController {
         
         InitView()
 
-        
-        getPlacesLocation()
+        //getPlacesLocation()
         
         
     }
   
+    
+    override func viewDidAppear(_ animated: Bool) {
+         getPlacesLocation()
+    }
+    
+    
     func InitView()
     {
         tvWarning.layer.borderColor = UIColor.lightGray.cgColor
@@ -219,11 +219,7 @@ class MapViewController: UIViewController {
     
     @IBAction func sendWarningForTourist(_ sender: Any) {
         
-        HiddenInformWarningOption()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.ShowWarningPopup()
-        })
-        
+        self.ShowWarningPopup()
         
     }
     
@@ -252,86 +248,96 @@ class MapViewController: UIViewController {
         
     }
     
-    // MARK Inform Warning Option
+    // MARK: Alert Inform Warning Option
+
     
     @IBAction func informWarningOption(_ sender: Any) {
         
-        HiddenWarningPopup()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.ShowInformWarningOption()
-        })
+        alertInformWarningOption();
         
     }
+    var alertController = UIAlertController();
     
-    func ShowInformWarningOption() {
-        
-        
-        UIView.animate(withDuration: 0.3, animations:
-            {
-                
-                self.consBottomInformWarningOption.constant = 0
-                self.view.layoutIfNeeded();
+    func alertInformWarningOption()
+    {
+        self.alertController = UIAlertController(title: "Menu", message: "Vui lòng chọn cảnh báo hoặc thông báo", preferredStyle: .alert)
+        let buttonOne = UIAlertAction(title: "Cảnh báo chung", style: .default, handler: { (action) -> Void in
+            self.performSegue(withIdentifier: "warningSegue", sender: self)
         })
-        vBackgroundWarning.isHidden = false
-    }
-    
-    func HiddenInformWarningOption() {
-        
-        
-        UIView.animate(withDuration: 0.3, animations:
-            {
-                self.consBottomInformWarningOption.constant = -208
-                self.view.layoutIfNeeded();
-
-        }, completion: { finished in
-                self.vBackgroundWarning.isHidden = true
+        let buttonTwo = UIAlertAction(title: "Thông báo chung", style: .default, handler: { (action) -> Void in
+            self.performSegue(withIdentifier: "informSegue", sender: self)
         })
-    }
-    
-    @IBAction func closeAllPopup(_ sender: Any) {
-        HiddenInformWarningOption()
+        let buttonCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            
+        }
+        alertController.addAction(buttonOne)
+        alertController.addAction(buttonTwo)
+        alertController.addAction(buttonCancel)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 }
 
 extension MapViewController: GMSMapViewDelegate{
     
-    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        
-       // mapView.selectedMarker = marker
-        var customInfoWindow:Any!
-        if self.displaySegmented.selectedSegmentIndex == 0{
-            
-            let data = marker.userData as! Place
-            self.markerSelected = data
-            
-            customInfoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as!  CustomInfoWindow
-            (customInfoWindow as! CustomInfoWindow).place = data
-            
-//            var positionMarker = mapView.projection.point(for: marker.position)
+//    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+//        
+//       // mapView.selectedMarker = marker
+//        var customInfoWindow:Any!
+//        if self.displaySegmented.selectedSegmentIndex == 0{
 //            
-//            let newPositionMarker = CGPoint(x: positionMarker.x, y: positionMarker.y - 100)
+//            let data = marker.userData as! Place
+//            self.markerSelected = data
 //            
-//            let camera = GMSCameraUpdate.setTarget(mapView.projection.coordinate(for: newPositionMarker))
+//            customInfoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as!  CustomInfoWindow
+//            (customInfoWindow as! CustomInfoWindow).place = data
 //            
-//            mapView.animate(with: camera)
-            
-           
-        }
-        else{
-            let data = marker.userData as! Tourist
-            self.markerSelected = data
-            customInfoWindow = Bundle.main.loadNibNamed("TouristInfoWindow", owner: self, options: nil)?[0] as!  TouristInfoWindow
-            (customInfoWindow as! TouristInfoWindow).tourist = data
-
-        }
-        
-        return customInfoWindow as! UIView?
-    }
+////            var positionMarker = mapView.projection.point(for: marker.position)
+////            
+////            let newPositionMarker = CGPoint(x: positionMarker.x, y: positionMarker.y - 100)
+////            
+////            let camera = GMSCameraUpdate.setTarget(mapView.projection.coordinate(for: newPositionMarker))
+////            
+////            mapView.animate(with: camera)
+//            
+//           
+//        }
+//        else{
+//            let data = marker.userData as! Tourist
+//            self.markerSelected = data
+//            customInfoWindow = Bundle.main.loadNibNamed("TouristInfoWindow", owner: self, options: nil)?[0] as!  TouristInfoWindow
+//            (customInfoWindow as! TouristInfoWindow).tourist = data
+//
+//        }
+//        
+//        return customInfoWindow as! UIView?
+//    }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print("Tap marker")
-        return false
+        
+        mapView.selectedMarker = marker
+        
+        let positionMarker = mapView.projection.point(for: marker.position)
+        
+        let newPositionMarker = CGPoint(x: positionMarker.x, y: positionMarker.y - 100)
+        
+        let camera = GMSCameraUpdate.setTarget(mapView.projection.coordinate(for:newPositionMarker))
+        
+        if self.displaySegmented.selectedSegmentIndex == 0
+        {
+            updateMarkerSelect(oldMarker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: false).map = mapView
+        }
+        
+        else
+        {
+            updateMarkerSelect(oldMarker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: true).map = mapView
+        }
+        
+        
+        mapView.animate(with: camera)
+        
+        return true
     }
     
     
@@ -350,8 +356,6 @@ extension MapViewController: GMSMapViewDelegate{
     }
     
     func creteMarker(latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
-        // Creates a marker in the center of the map.
-        
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -375,6 +379,36 @@ extension MapViewController: GMSMapViewDelegate{
         
         return marker
     }
+    
+    
+    func updateMarkerSelect(oldMarker: GMSMarker ,latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
+        
+        oldMarker.map = nil
+        
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        marker.userData = data
+        
+        if isTourist{
+            
+            let ivmarker = UIImage(named: "4")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
+            
+            
+        }else{
+            
+            let ivmarker = UIImage(named: "4")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
+        }
+        
+        return marker
+    }
+
+    
     
     func drawMarker(marker: GMSMarker ,image: UIImage, markerImage: UIImage ) {
         

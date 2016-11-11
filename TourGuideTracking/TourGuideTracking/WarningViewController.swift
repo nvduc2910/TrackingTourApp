@@ -17,7 +17,7 @@ class WarningViewController: UIViewController {
         super.viewDidLoad()
 
         mapView.isMyLocationEnabled = true
-        
+        mapView.settings.myLocationButton = true
         self.tabBarController?.hidesBottomBarWhenPushed = true
         // Do any additional setup after loading the view.
     }
