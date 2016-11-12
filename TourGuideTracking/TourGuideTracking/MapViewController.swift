@@ -13,6 +13,8 @@ import SwiftR
 
 class MapViewController: UIViewController {
 
+    
+  
 
     @IBOutlet weak var ivTest1: UIImageView!
     @IBOutlet weak var vInfoPlace: ViewRoundCorner!
@@ -24,7 +26,9 @@ class MapViewController: UIViewController {
     @IBOutlet weak var consTopVWarning: NSLayoutConstraint!
     @IBOutlet weak var vBackgroundWarning: UIView!
 
+    @IBOutlet weak var vMenu: UIView!
     @IBOutlet weak var vInfoTourist: UIView!
+    @IBOutlet weak var consTopMenu: NSLayoutConstraint!
 
     var tour:Tour!
     var chatHub: Hub?
@@ -75,7 +79,27 @@ class MapViewController: UIViewController {
         tvWarning.layer.masksToBounds = true
     }
     
-
+    @IBAction func showMenu(_ sender: Any) {
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.consTopMenu.constant = -64
+                self.view.layoutIfNeeded()
+        })
+        
+    }
+    
+    @IBAction func hiddenMenu(_ sender: Any) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.consTopMenu.constant = -536
+                self.view.layoutIfNeeded()
+                
+        })
+        
+    }
     @IBAction func displayLocationSegmentedValueChanged(_ sender: AnyObject) {
         
         hiddenPopupInfoPlace()
@@ -276,13 +300,12 @@ class MapViewController: UIViewController {
         self.hiddenPopupInfoTourist()
         self.ShowWarningPopup()
     }
-    // MARK: Alert Inform Warning Option
-
     
-    @IBAction func informWarningOption(_ sender: Any) {
+    
+    // MARK: Alert Inform Warning Option
+    @IBAction func showWarningInformOption(_ sender: Any) {
         
         alertInformWarningOption();
-        
     }
     var alertController = UIAlertController();
     

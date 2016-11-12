@@ -52,6 +52,7 @@
 		6C9DC8181DD4E27800F1216C /* WarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DC8171DD4E27800F1216C /* WarningViewController.swift */; };
 		6C9DC81A1DD4E2C300F1216C /* TextViewRoundConner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DC8191DD4E2C300F1216C /* TextViewRoundConner.swift */; };
 		6C9DC81C1DD4EA7700F1216C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DC81B1DD4EA7700F1216C /* Test.swift */; };
+		6CDF3A671DD6FA38000DCCBC /* ImageRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDF3A661DD6FA38000DCCBC /* ImageRound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		6C9DC8191DD4E2C300F1216C /* TextViewRoundConner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewRoundConner.swift; sourceTree = "<group>"; };
 		6C9DC81B1DD4EA7700F1216C /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		6CD82A321DD2210E00F36CFE /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../Library/Developer/Xcode/DerivedData/TourGuideTracking-fknwavfuaqwsrybdadbnsyfccysn/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
+		6CDF3A661DD6FA38000DCCBC /* ImageRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRound.swift; sourceTree = "<group>"; };
 		814F744039AF77D618A56FBA /* Pods_TourGuideTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TourGuideTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -276,6 +278,7 @@
 				6C72945B1DD0ED160042E5E0 /* ViewRoundCorner.swift */,
 				6C64C91D1DD387FA00A74918 /* ButtonRoundCorner.swift */,
 				6C9DC8191DD4E2C300F1216C /* TextViewRoundConner.swift */,
+				6CDF3A661DD6FA38000DCCBC /* ImageRound.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				6C64C91E1DD387FA00A74918 /* ButtonRoundCorner.swift in Sources */,
 				5AD99B411DC23EFA004CE706 /* Schedule.swift in Sources */,
 				5A433BED1DB09B61004A6D94 /* TourInfoViewController.swift in Sources */,
+				6CDF3A671DD6FA38000DCCBC /* ImageRound.swift in Sources */,
 				6C9DC8181DD4E27800F1216C /* WarningViewController.swift in Sources */,
 				5A5FEBE71DAC8E540026F021 /* NetworkService.swift in Sources */,
 				5A5ECECA1DC8381A00AFFFDF /* ScheduleCell.swift in Sources */,
