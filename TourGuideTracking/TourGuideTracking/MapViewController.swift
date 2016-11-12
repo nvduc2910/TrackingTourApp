@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
 
 
     @IBOutlet weak var ivTest1: UIImageView!
+    @IBOutlet weak var vInfoPlace: ViewRoundCorner!
     @IBOutlet weak var displaySegmented: UISegmentedControl!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var vWarning: UIView!
@@ -23,13 +24,13 @@ class MapViewController: UIViewController {
     @IBOutlet weak var consTopVWarning: NSLayoutConstraint!
     @IBOutlet weak var vBackgroundWarning: UIView!
 
+    @IBOutlet weak var vInfoTourist: UIView!
 
     var tour:Tour!
-    var markerSelected:Any!
     var chatHub: Hub?
     var connection: SignalR?
     var locationManager:CLLocationManager = CLLocationManager();
-    
+    var markerSelected: GMSMarker?
     
     
     override func viewDidLoad() {
@@ -43,18 +44,26 @@ class MapViewController: UIViewController {
         tabBar.currentTour = tour
         connectServer()
         //displaySegmented.selectedSegmentIndex = 0
-        self.mapView.delegate = self
         
+        let gestPan = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.didDragMap))
+        gestPan.delaysTouchesEnded = true
+        
+        self.mapView.addGestureRecognizer(gestPan)
+        self.mapView.settings.consumesGesturesInView = false
+        
+        
+        self.mapView.delegate = self
         InitView()
-
         //getPlacesLocation()
         
-        
     }
-  
     
     override func viewDidAppear(_ animated: Bool) {
-         getPlacesLocation()
+        
+        if (Singleton.sharedInstance.places?.count == 0)
+        {
+            getPlacesLocation()
+        }
     }
     
     
@@ -66,21 +75,43 @@ class MapViewController: UIViewController {
         tvWarning.layer.masksToBounds = true
     }
     
+
     @IBAction func displayLocationSegmentedValueChanged(_ sender: AnyObject) {
+        
+        hiddenPopupInfoPlace()
+        hiddenPopupInfoTourist()
+        if(markerSelected != nil)
+        
+        {
+            markerSelected = nil
+        }
+        
         if displaySegmented.selectedSegmentIndex == 0{
             if (Singleton.sharedInstance.places?.count == 0){
+                
                 getPlacesLocation()
+                
             }
             else{
+                
                 displayPlacesOnMap()
+                
             }
         }
+            
+            
         else{
+            
             if Singleton.sharedInstance.tourists?.count == 0{
+                
+             
                 getTouristsLocation()
+                
             }
             else{
+                
                 displayTouristOnMap()
+               
             }
         }
     }
@@ -132,19 +163,23 @@ class MapViewController: UIViewController {
     }
     
     func displayPlacesOnMap(){
+        
         let places = Singleton.sharedInstance.places
-         self.setMapView(lat: (places?[0].location?.latitude!)!, long: (places?[0].location?.longitude!)!)
+        self.setMapView(lat: (places?[0].location?.latitude!)!, long: (places?[0].location?.longitude!)!)
+        
         for place in places!{
-            creteMarker(latitude: place.location.latitude!, longitude: place.location.longitude!, data:place, isTourist: false).map = mapView
+            createMarker(latitude: place.location.latitude!, longitude: place.location.longitude!, data:place, isTourist: false).map = mapView
         }
 
     }
+   
     
     func displayTouristOnMap(){
         let tourists = Singleton.sharedInstance.tourists
         self.setMapView(lat: (tourists?[0].location?.latitude!)!, long: (tourists?[0].location?.longitude!)!)
+        
         for tourist in tourists!{
-            creteMarker(latitude: tourist.location!.latitude!, longitude: tourist.location!.longitude!, data:tourist, isTourist: true).map = mapView
+            createMarker(latitude: tourist.location!.latitude!, longitude: tourist.location!.longitude!, data:tourist, isTourist: true).map = mapView
         }
     }
     
@@ -191,12 +226,6 @@ class MapViewController: UIViewController {
         connection?.error = { error in
             print("Error connect1: \(error)")
             
-            // Here's an example of how to automatically reconnect after a timeout.
-            //
-            // For example, on the device, if the app is in the background long enough
-            // for the SignalR connection to time out, you'll get disconnected/error
-            // notifications when the app becomes active again.
-            
             if let source = error?["source"] as? String, source == "TimeoutException" {
                 print("Connection timed out. Restarting...")
                 self.connection?.start()
@@ -206,20 +235,15 @@ class MapViewController: UIViewController {
     }
     
     func updateLocation(latitude:Double, longitude:Double){
-            chatHub?.invoke("updateLocation", arguments: [latitude, longitude])
+        
+        chatHub?.invoke("updateLocation", arguments: [latitude, longitude])
     }
     
     
-    // MARK Popup warning
+    // MARK: Popup warning
     
     @IBAction func closeWarningPopup(_ sender: Any) {
         HiddenWarningPopup()
-        
-    }
-    
-    @IBAction func sendWarningForTourist(_ sender: Any) {
-        
-        self.ShowWarningPopup()
         
     }
     
@@ -247,7 +271,11 @@ class MapViewController: UIViewController {
         view.endEditing(true)
         
     }
-    
+    @IBAction func warningForTourist(_ sender: Any) {
+        
+        self.hiddenPopupInfoTourist()
+        self.ShowWarningPopup()
+    }
     // MARK: Alert Inform Warning Option
 
     
@@ -281,38 +309,22 @@ class MapViewController: UIViewController {
 
 extension MapViewController: GMSMapViewDelegate{
     
-//    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-//        
-//       // mapView.selectedMarker = marker
-//        var customInfoWindow:Any!
-//        if self.displaySegmented.selectedSegmentIndex == 0{
-//            
-//            let data = marker.userData as! Place
-//            self.markerSelected = data
-//            
-//            customInfoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as!  CustomInfoWindow
-//            (customInfoWindow as! CustomInfoWindow).place = data
-//            
-////            var positionMarker = mapView.projection.point(for: marker.position)
-////            
-////            let newPositionMarker = CGPoint(x: positionMarker.x, y: positionMarker.y - 100)
-////            
-////            let camera = GMSCameraUpdate.setTarget(mapView.projection.coordinate(for: newPositionMarker))
-////            
-////            mapView.animate(with: camera)
-//            
-//           
-//        }
-//        else{
-//            let data = marker.userData as! Tourist
-//            self.markerSelected = data
-//            customInfoWindow = Bundle.main.loadNibNamed("TouristInfoWindow", owner: self, options: nil)?[0] as!  TouristInfoWindow
-//            (customInfoWindow as! TouristInfoWindow).tourist = data
-//
-//        }
-//        
-//        return customInfoWindow as! UIView?
-//    }
+    func didDragMap()
+    {
+        hiddenPopupInfoTourist()
+        hiddenPopupInfoPlace()
+        if(markerSelected != nil)
+        {
+            if self.displaySegmented.selectedSegmentIndex == 0
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: false).map = mapView
+            }
+            else
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: true).map = mapView
+            }
+        }
+    }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
@@ -324,38 +336,68 @@ extension MapViewController: GMSMapViewDelegate{
         
         let camera = GMSCameraUpdate.setTarget(mapView.projection.coordinate(for:newPositionMarker))
         
+        mapView.animate(with: camera)
+        
         if self.displaySegmented.selectedSegmentIndex == 0
         {
-            updateMarkerSelect(oldMarker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: false).map = mapView
+            if(markerSelected != nil)
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: false).map = mapView
+            }
+            updateMarkerSelect(marker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: true).map = mapView
+            showPopupInfoPlace()
         }
         
         else
         {
-            updateMarkerSelect(oldMarker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: true).map = mapView
+            if(markerSelected != nil)
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: true).map = mapView
+            }
+            updateMarkerSelect(marker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: true).map = mapView
+            showPopupInfoTourist()
         }
         
-        
-        mapView.animate(with: camera)
-        
+        markerSelected = marker
         return true
     }
     
-    
-    
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        
+        hiddenPopupInfoTourist()
+        hiddenPopupInfoPlace()
+        if(markerSelected != nil)
+        {
+            if self.displaySegmented.selectedSegmentIndex == 0
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: false).map = mapView
+            }
+            else
+            {
+                removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: true).map = mapView
+            }
+        }
+
+    }
+  
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         if self.displaySegmented.selectedSegmentIndex == 0{
             self.performSegue(withIdentifier: "SeguePlaceDetails", sender: self)
         }
     }
+    
+    
     func setMapView(lat:Double = 0, long:Double = 0) {
+        
         mapView.clear()
         let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 12.0)
-        mapView.camera = camera
+        mapView.animate(to: camera)
         mapView.isMyLocationEnabled = true
+        
     }
     
-    func creteMarker(latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
+    func createMarker(latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -380,14 +422,9 @@ extension MapViewController: GMSMapViewDelegate{
         return marker
     }
     
-    
-    func updateMarkerSelect(oldMarker: GMSMarker ,latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
+    func updateMarkerSelect(marker: GMSMarker ,latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
         
-        oldMarker.map = nil
-        
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        marker.userData = data
+        marker.map = nil
         
         if isTourist{
             
@@ -404,10 +441,32 @@ extension MapViewController: GMSMapViewDelegate{
             
             drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
         }
-        
         return marker
     }
 
+    func removeMarkerSelect(marker: GMSMarker ,latitude:Double, longitude:Double, data:AnyObject?, isTourist: Bool) -> GMSMarker{
+        
+        marker.map = nil
+        
+        if isTourist{
+            
+            let ivmarker = UIImage(named: "2")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
+            
+            
+        }else{
+            
+            let ivmarker = UIImage(named: "3")
+            let ivAvatar = UIImage(named: "ic_avatar")
+            
+            drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
+        }
+        markerSelected = nil
+        return marker
+    }
+    
     
     
     func drawMarker(marker: GMSMarker ,image: UIImage, markerImage: UIImage ) {
@@ -445,32 +504,62 @@ extension MapViewController: GMSMapViewDelegate{
         ivMarker.image = markerImage
         ivPhoto.image = image
         
-        //vTest = vTemp
-        
-        
         UIGraphicsBeginImageContextWithOptions(vTemp.bounds.size, false, image.scale)
         vTemp.layer.render(in: UIGraphicsGetCurrentContext()!)
         
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()
-
         
         marker.icon = finalImage
-        
-        
+    
     }
+    
+    func showPopupInfoTourist()
+    {
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.vInfoTourist.isHidden = false
+                self.view.layoutIfNeeded()
+        })
+    }
+    
+    func hiddenPopupInfoTourist()
+    {
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.vInfoTourist.isHidden = true
+                self.view.layoutIfNeeded()
+        })
+    }
+    
+    func showPopupInfoPlace()
+    {
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.vInfoPlace.isHidden = false
+                self.view.layoutIfNeeded()
+        })
+    }
+    
+    func hiddenPopupInfoPlace()
+    {
+        UIView.animate(withDuration: 0.3, animations:
+            {
+                self.vInfoPlace.isHidden = true
+                self.view.layoutIfNeeded()
+        })
+    }
+    
     
 }
 
 
-
-
 extension MapViewController: CLLocationManagerDelegate{
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let hub = chatHub, {
-//            hub.invoke("updateLocation", arguments: ["37.121300", "-95.416603"])
-//        }
-        updateLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude);
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+////        if let hub = chatHub, {
+////            hub.invoke("updateLocation", arguments: ["37.121300", "-95.416603"])
+////        }
+//        updateLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude);
+//    }
 }
