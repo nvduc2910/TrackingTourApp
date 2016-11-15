@@ -19,14 +19,13 @@ class InformViewController: UIViewController {
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         self.tabBarController?.hidesBottomBarWhenPushed = true
-        // Do any additional setup after loading the view.
+        //Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        //Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

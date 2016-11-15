@@ -10,13 +10,25 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 import SwiftR
+import UIColor_Hex_Swift
 
-class MapViewController: UIViewController {
+public enum StatusConnection {
+    case connected
+    case disconnected
+    case reconnected
+    case error
+    case starting
+}
 
-    
-  
+class MapViewController: BaseViewController {
 
-    @IBOutlet weak var ivTest1: UIImageView!
+    @IBOutlet weak var vStatusConnection: ViewRoundCorner!
+
+    @IBOutlet weak var consVTopStatusTourist: NSLayoutConstraint!
+    @IBOutlet weak var lbStatusTourist: UILabel!
+    @IBOutlet weak var vStatusTourist: UIView!
+    @IBOutlet weak var consTopVStatusConnection: NSLayoutConstraint!
+    @IBOutlet weak var lbStatusConnection: UILabel!
     @IBOutlet weak var vInfoPlace: ViewRoundCorner!
     @IBOutlet weak var displaySegmented: UISegmentedControl!
     @IBOutlet weak var mapView: GMSMapView!
@@ -25,13 +37,12 @@ class MapViewController: UIViewController {
     @IBOutlet weak var btnSendWarning: UIButton!
     @IBOutlet weak var consTopVWarning: NSLayoutConstraint!
     @IBOutlet weak var vBackgroundWarning: UIView!
-
     @IBOutlet weak var vMenu: UIView!
     @IBOutlet weak var vInfoTourist: UIView!
     @IBOutlet weak var consTopMenu: NSLayoutConstraint!
-
+    
     var tour:Tour!
-    var chatHub: Hub?
+    var tourguideHub: Hub?
     var connection: SignalR?
     var locationManager:CLLocationManager = CLLocationManager();
     var markerSelected: GMSMarker?
@@ -71,6 +82,8 @@ class MapViewController: UIViewController {
     }
     
     
+    
+    
     func InitView()
     {
         tvWarning.layer.borderColor = UIColor.lightGray.cgColor
@@ -98,6 +111,11 @@ class MapViewController: UIViewController {
                 self.view.layoutIfNeeded()
                 
         })
+        
+        alertDisconnection(receiver: "MG_" + String(describing: self.tour.managerId!), sender: "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), senderUserName: Singleton.sharedInstance.tourguide.name!)
+        
+        
+        SwiftR.stopAll()
         
     }
     @IBAction func displayLocationSegmentedValueChanged(_ sender: AnyObject) {
@@ -140,8 +158,6 @@ class MapViewController: UIViewController {
         }
     }
     
-
-    
     //get tour location
     func getPlacesLocation(){
         let url = URLs.makeURL_EXTEND(url: URLs.URL_GET_TOURS, extend: URL_EXTEND.PLACES, param: tour.tourId!)
@@ -174,7 +190,6 @@ class MapViewController: UIViewController {
                     let tourists = response?.listData
                     Singleton.sharedInstance.tourists = tourists
                     self.displayTouristOnMap()
-                    self.updateLocation(latitude: (tourists?[0].location?.latitude)!, longitude: (tourists?[0].location?.longitude)!)
                 }
                 else{
                     Alert.showAlertMessage(userMessage: message!, vc: self)
@@ -214,55 +229,265 @@ class MapViewController: UIViewController {
 //        }
 //    }
     
+    
+   
+    
+    
+    //MARK: Realtime Server
+    
     func connectServer(){
         SwiftR.useWKWebView = false
-    
+        
         SwiftR.signalRVersion = .v2_2_0
         
-        connection = SwiftR.connect("http://192.168.0.104:3407/signalr/hubs") { [weak self] connection in
-            connection.queryString = ["MANAGER_ID" : "1", "USER_ID" : "TOURGUIDE_1"]
-            self?.chatHub = connection.createHubProxy("hubServer")
-           
-            self?.chatHub?.on("broadcastMessage") { args in
+       // let urlServerRealtime = "http://tourtrackingv2.azurewebsites.net/signalr/hubs"
+        
+        let urlServerRealtime = "http://192.168.0.104:3407/signalr/hubs"
+        
+        connection = SwiftR.connect(urlServerRealtime) { [weak self]
+            connection in
+            connection.queryString = ["USER_POSITION" : "TG", "MANAGER_ID" : "MG_" + String(describing: (self?.tour.managerId!)!) , "USER_ID" : "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!)]
+            self?.tourguideHub = connection.createHubProxy("hubServer")
+            
+            self?.tourguideHub?.on("broadcastMessage") { args in
                 
+            }
+            
+            self?.tourguideHub?.on("updateNumberOfOnline"){ args in
+                let groupName = args![0] as! String
+                let numberOfOnline = args![1] as! String
+                
+                if(groupName.contains("GROUP_MANAGER"))
+                {
+                    
+                }
+                else
+                {
+                    self?.updateNumberOfOnline(number: numberOfOnline)
+                    print("Message: \(groupName)\nDetail: \(numberOfOnline)")
+               
                 }
             }
-        connection?.starting = { [weak self] in
-            //self?.statusLabel.text = "Starting..."
-            //self?.startButton.isEnabled = false
-            //self?.sendButton.isEnabled = false
+            
+            self?.tourguideHub?.on("initTouristConnected"){ args in
+                let touristName = args![2] as! String
+                self?.touristConnected(usernameTourist: touristName)
+                
+            }
+            
+        }
+        connection?.starting = { [weak self] in                                                                                                                                                                                                                                                                                                                                                     
+            self?.updateStatusConnection(status: StatusConnection.starting)
+
         }
         
         connection?.reconnecting = { [weak self] in
-            //self?.statusLabel.text = "Reconnecting..."
-            //self?.startButton.isEnabled = false
-            //self?.sendButton.isEnabled = false
+            self?.updateStatusConnection(status: StatusConnection.reconnected)
         }
         
         connection?.connected = { [weak self] in
             print("Connection ID: \(self?.connection?.connectionID!)")
-            //self?.statusLabel.text = "Connected"
-            //self?.startButton.isEnabled = true
-            //self?.startButton.title = "Stop"
-            //self?.sendButton.isEnabled = true
+            self?.updateStatusConnection(status: StatusConnection.connected)
+            
+            self?.initCurrentLocation(receiver: "MG_" + String(describing: (self?.tour.managerId)!), tourguide: Singleton.sharedInstance.tourguide!, tour: (self?.tour)!)
         }
         
+        connection?.disconnected = { [weak self] in
+            self?.updateStatusConnection(status: StatusConnection.disconnected)
+            
+            
+        }
+        
+        connection?.reconnected = { [weak self] in
+            self?.updateStatusConnection(status: StatusConnection.connected)
+        }
         connection?.error = { error in
             print("Error connect1: \(error)")
+            
+            self.updateStatusConnection(status: StatusConnection.error)
             
             if let source = error?["source"] as? String, source == "TimeoutException" {
                 print("Connection timed out. Restarting...")
                 self.connection?.start()
             }
         }
+        
+    }
+    
+    func updateNumberOfOnline(number: String) {
+        
+        vStatusConnection.backgroundColor = UIColor(rgba: "#D9F7D7")
+        lbStatusConnection.textColor = UIColor(rgba: "#259360")
+        lbStatusConnection.text = "Connected: " + number + " Tourist"
+    }
+    
+    func updateStatusConnection(status: StatusConnection )
+    {
+        if(status == .starting)
+        {
+            
+            vStatusConnection.backgroundColor = UIColor(rgba: "#D7EBF9")
+            lbStatusConnection.textColor = UIColor(rgba: "#6BA1C8")
+            lbStatusConnection.text = "Staring connection..."
+            
+            UIView.animate(withDuration: 1, animations: {
+                self.consTopVStatusConnection.constant = 0
+                self.view.layoutIfNeeded()
+            })
+           
+        }
+        if(status == .connected)
+        {
+            //view.layer.backgroundColor
+            vStatusConnection.backgroundColor = UIColor(rgba: "#D9F7D7")
+            lbStatusConnection.textColor = UIColor(rgba: "#259360")
+            lbStatusConnection.text = "Connected"
+        }
+        else if(status == .disconnected)
+        {
+            vStatusConnection.backgroundColor = UIColor(rgba: "#F5DDDD")
+            lbStatusConnection.textColor = UIColor(rgba: "#CC3A3A")
+            lbStatusConnection.text = "Disconnect"
+            
+            alertDisconnection(receiver: "MG_" + String(describing: self.tour.managerId!), sender: "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), senderUserName: Singleton.sharedInstance.tourguide.name!)
+            
+         
+//            self.alertDisconnection(receiver:
+//                "MG_" + (self.tour.managerId! as! String), sender: "TG_" + (Singleton.sharedInstance.tourguide.tourGuideId! as! String))
+            
+        }
+        else if(status == .reconnected)
+        {
+            vStatusConnection.backgroundColor = UIColor(rgba: "#D7EBF9")
+            lbStatusConnection.textColor = UIColor(rgba: "#6BA1C8")
+            lbStatusConnection.text = "Reconnecting"
+            
+        }
+        else if(status == .error)
+        {
+            vStatusConnection.backgroundColor = UIColor(rgba: "#F5DDDD")
+            lbStatusConnection.textColor = UIColor(rgba: "#CC3A3A")
+            lbStatusConnection.text = "Not found server"
 
+        }
+        
+    }
+    
+    // Send location for Manager
+    func initCurrentLocation(receiver: String, tourguide: TourGuide, tour: Tour)
+    {
+
+        let tourguideSer = [
+            "tourguide_id": tourguide.tourGuideId,
+            "tourguide_name": tourguide.name,
+            "phone": tourguide.phone,
+            "email": tourguide.email,
+            "display_photo" : tourguide.displayPhoto
+        ] as [String : Any]
+
+        let tour = [
+            "tour_name" : tour.name,
+            "departure_date": tour.departureDate,
+            "return_date": tour.returnDate,
+            "tour_id": tour.tourId,
+            "cover_photo": tour.coverPhoto
+            
+        ] as [String : Any]
+        
+        let user_lat = String(format: "%f", (locationManager.location?.coordinate.latitude)!)
+        let user_long = String(format: "%f", (locationManager.location?.coordinate.longitude)!)
+        
+        
+        tourguideHub?.invoke("initMarkerNewConection", arguments: [user_lat, user_long, receiver, tourguideSer, tour] ) { (result, error) in
+            if let e = error {
+                #if DEBUG
+                    
+                    self.showMessage("Error initMarkerNewConection: \(e)")
+                    
+                #else
+                    
+                #endif
+             
+            } else {
+                print("Success!")
+                if let r = result {
+                    print("Result: \(r)")
+                }
+            }
+        }
+    }
+    
+    
+    func alertDisconnection(receiver: String, sender: String, senderUserName: String)
+    {
+        tourguideHub?.invoke("removeUserDisconnection", arguments: [receiver, sender, senderUserName] ) { (result, error) in
+            if let e = error {
+                #if DEBUG
+                    
+                    self.showMessage("Error removeUserDisconnection: \(e)")
+                    
+                #else
+                    
+                #endif
+                
+            } else {
+                print("Success!")
+                if let r = result {
+                    print("Result: \(r)")
+                }
+            }
+        }
+        
+        SwiftR.stopAll()
     }
     
     func updateLocation(latitude:Double, longitude:Double){
         
-        chatHub?.invoke("updateLocation", arguments: [latitude, longitude])
+        let receiver = "MG_" + String(describing: (self.tour.managerId)!)
+        let senderId =  Singleton.sharedInstance.tourguide!.tourGuideId
+        tourguideHub?.invoke("updatePositionTourGuide", arguments: [senderId, latitude, longitude, receiver])
     }
     
+    // MARK: Tourist 
+    
+    func touristConnected(usernameTourist: String)
+    {
+        
+        vStatusTourist.backgroundColor = UIColor(rgba: "#D9F7D7")
+        lbStatusTourist.textColor = UIColor(rgba: "#259360")
+        lbStatusTourist.text = usernameTourist + " Has just Connected"
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.consVTopStatusTourist.constant = 0
+            self.view.layoutIfNeeded()
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+            UIView.animate(withDuration: 1, animations: {
+                self.consVTopStatusTourist.constant = -40
+                self.view.layoutIfNeeded()
+            })
+        })
+    }
+    
+    func touristDisconnected(usernameTourist: String)
+    {
+        vStatusTourist.backgroundColor = UIColor(rgba: "#F5DDDD")
+        lbStatusTourist.textColor = UIColor(rgba: "#CC3A3A")
+        lbStatusTourist.text = usernameTourist + " Has just Connected"
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.consVTopStatusTourist.constant = 0
+            self.view.layoutIfNeeded()
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+            UIView.animate(withDuration: 1, animations: {
+                self.consVTopStatusTourist.constant = -40
+                self.view.layoutIfNeeded()
+            })
+        })
+    }
     
     // MARK: Popup warning
     
@@ -367,7 +592,7 @@ extension MapViewController: GMSMapViewDelegate{
             {
                 removeMarkerSelect(marker: markerSelected!, latitude: (markerSelected?.position.latitude)!, longitude: (markerSelected?.position.longitude)!, data: markerSelected?.userData as AnyObject?, isTourist: false).map = mapView
             }
-            updateMarkerSelect(marker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: true).map = mapView
+            updateMarkerSelect(marker: marker, latitude: marker.position.latitude, longitude: marker.position.longitude, data: marker.userData as AnyObject?, isTourist: false).map = mapView
             showPopupInfoPlace()
         }
         
@@ -437,7 +662,7 @@ extension MapViewController: GMSMapViewDelegate{
         }else{
             
             let ivmarker = UIImage(named: "3")
-            let ivAvatar = UIImage(named: "ic_avatar")
+            let ivAvatar = UIImage(named: "banahill")
             
             drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
         }
@@ -460,7 +685,7 @@ extension MapViewController: GMSMapViewDelegate{
         }else{
             
             let ivmarker = UIImage(named: "4")
-            let ivAvatar = UIImage(named: "ic_avatar")
+            let ivAvatar = UIImage(named: "banahill")
             
             drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
         }
@@ -482,7 +707,7 @@ extension MapViewController: GMSMapViewDelegate{
         }else{
             
             let ivmarker = UIImage(named: "3")
-            let ivAvatar = UIImage(named: "ic_avatar")
+            let ivAvatar = UIImage(named: "banahill")
             
             drawMarker(marker: marker, image: ivAvatar!, markerImage: ivmarker!)
         }
@@ -579,10 +804,10 @@ extension MapViewController: GMSMapViewDelegate{
 
 
 extension MapViewController: CLLocationManagerDelegate{
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-////        if let hub = chatHub, {
-////            hub.invoke("updateLocation", arguments: ["37.121300", "-95.416603"])
-////        }
-//        updateLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude);
-//    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let hub = chatHub, {
+//            hub.invoke("updateLocation", arguments: ["37.121300", "-95.416603"])
+//        }
+        updateLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude);
+    }
 }

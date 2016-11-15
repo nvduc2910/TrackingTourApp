@@ -59,6 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+    
+//        let mapViewController = MapViewController(nibName: "MapViewController", bundle: nil)
+//        
+//        mapViewController.alertDisconnection(receiver: "MG_" + String(describing: mapViewController.tour.managerId!), sender: "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), senderUserName: Singleton.sharedInstance.tourguide.name!)
+        
+        
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }

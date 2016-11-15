@@ -67,7 +67,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cảnh báo - Duc Nguyen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqp-VL-DfD">
-                                                        <rect key="frame" x="42.5" y="45" width="197.5" height="25"/>
+                                                        <rect key="frame" x="42" y="45" width="198" height="25"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                                                 <state key="normal" image="ic_call"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smP-bU-7Ht">
-                                                <rect key="frame" x="260" y="9.5" width="32" height="16.5"/>
+                                                <rect key="frame" x="260" y="9" width="32" height="17"/>
                                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -275,7 +275,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+849999222" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K4-V4-4qO">
-                                                <rect key="frame" x="10" y="40.5" width="80" height="19.5"/>
+                                                <rect key="frame" x="10" y="40" width="80" height="20"/>
                                                 <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -303,6 +303,42 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CyR-f5-Bh3" customClass="ViewRoundCorner" customModule="TourGuideTracking" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-28" width="89" height="28"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71q-Rr-wtt">
+                                        <rect key="frame" x="5" y="5" width="79" height="18"/>
+                                        <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="13"/>
+                                        <color key="textColor" red="0.41960784313725491" green="0.63137254901960782" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.84313725490196079" green="0.92156862745098034" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="71q-Rr-wtt" secondAttribute="trailing" constant="5" id="7Zx-ye-r1o"/>
+                                    <constraint firstItem="71q-Rr-wtt" firstAttribute="leading" secondItem="CyR-f5-Bh3" secondAttribute="leading" constant="5" id="JOr-rG-7E5"/>
+                                    <constraint firstAttribute="bottom" secondItem="71q-Rr-wtt" secondAttribute="bottom" constant="5" id="Tfl-ph-uwg"/>
+                                    <constraint firstAttribute="height" constant="28" id="blc-PF-ME9"/>
+                                    <constraint firstItem="71q-Rr-wtt" firstAttribute="top" secondItem="CyR-f5-Bh3" secondAttribute="top" constant="5" id="qC4-xb-GJW"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6v-UK-dSS">
+                                <rect key="frame" x="0.0" y="-40" width="375" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="en1-hY-zvY">
+                                        <rect key="frame" x="12" y="10" width="35.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="en1-hY-zvY" firstAttribute="leading" secondItem="r6v-UK-dSS" secondAttribute="leading" constant="12" id="8cn-ay-BZK"/>
+                                    <constraint firstAttribute="height" constant="40" id="b3c-Zz-NId"/>
+                                    <constraint firstItem="en1-hY-zvY" firstAttribute="centerY" secondItem="r6v-UK-dSS" secondAttribute="centerY" id="jxk-6E-2QT"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pKz-Cb-ZUl">
                                 <rect key="frame" x="0.0" y="-536" width="375" height="472"/>
                                 <subviews>
@@ -328,7 +364,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lU2-4z-g0Y">
-                                        <rect key="frame" x="162.5" y="400" width="50" height="50"/>
+                                        <rect key="frame" x="163" y="400" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="mOf-Ys-djo"/>
                                             <constraint firstAttribute="height" constant="50" id="sWV-U6-rJY"/>
@@ -360,13 +396,18 @@
                             <constraint firstItem="nnu-iX-Y6y" firstAttribute="leading" secondItem="xQs-J5-aYu" secondAttribute="leading" id="DQg-R9-LJb"/>
                             <constraint firstAttribute="trailing" secondItem="ZWW-D0-OR5" secondAttribute="trailing" id="Dvm-YN-znn"/>
                             <constraint firstItem="ZWW-D0-OR5" firstAttribute="leading" secondItem="xQs-J5-aYu" secondAttribute="leading" id="F0P-Zu-h4g"/>
+                            <constraint firstItem="CyR-f5-Bh3" firstAttribute="top" secondItem="53o-bO-R4W" secondAttribute="bottom" constant="-28" id="FlB-6W-RMw"/>
                             <constraint firstItem="YUO-9R-sRh" firstAttribute="top" secondItem="nnu-iX-Y6y" secondAttribute="bottom" id="HqC-Pz-cxe"/>
                             <constraint firstItem="YUO-9R-sRh" firstAttribute="top" secondItem="ZWW-D0-OR5" secondAttribute="bottom" id="IQT-Mr-uPd"/>
                             <constraint firstAttribute="trailing" secondItem="nnu-iX-Y6y" secondAttribute="trailing" id="KqJ-Yp-qI7"/>
                             <constraint firstItem="sju-LS-n3c" firstAttribute="top" secondItem="5xT-6K-hI0" secondAttribute="top" id="MUr-PQ-9tQ"/>
                             <constraint firstItem="pKz-Cb-ZUl" firstAttribute="top" secondItem="53o-bO-R4W" secondAttribute="bottom" constant="-536" id="OBc-Kb-Zn6"/>
                             <constraint firstItem="pKz-Cb-ZUl" firstAttribute="leading" secondItem="xQs-J5-aYu" secondAttribute="leading" id="QCR-st-w9y"/>
+                            <constraint firstItem="CyR-f5-Bh3" firstAttribute="leading" secondItem="xQs-J5-aYu" secondAttribute="leading" id="RKC-0U-cpq"/>
+                            <constraint firstAttribute="trailing" secondItem="r6v-UK-dSS" secondAttribute="trailing" id="RWC-9Q-PxH"/>
                             <constraint firstItem="nnu-iX-Y6y" firstAttribute="top" secondItem="53o-bO-R4W" secondAttribute="bottom" id="Sn7-Oy-xCt"/>
+                            <constraint firstItem="r6v-UK-dSS" firstAttribute="leading" secondItem="xQs-J5-aYu" secondAttribute="leading" id="XXi-Ec-Pew"/>
+                            <constraint firstItem="r6v-UK-dSS" firstAttribute="top" secondItem="53o-bO-R4W" secondAttribute="bottom" constant="-40" id="aij-ls-sNp"/>
                             <constraint firstItem="ZWW-D0-OR5" firstAttribute="top" secondItem="53o-bO-R4W" secondAttribute="bottom" id="c6B-mc-Dap"/>
                             <constraint firstAttribute="trailing" secondItem="pKz-Cb-ZUl" secondAttribute="trailing" id="fHI-9E-crk"/>
                             <constraint firstItem="sju-LS-n3c" firstAttribute="bottom" secondItem="5xT-6K-hI0" secondAttribute="bottom" id="jT2-jr-t4b"/>
@@ -405,14 +446,20 @@
                     <connections>
                         <outlet property="btnSendWarning" destination="X4h-6z-jTY" id="sZM-xe-lyZ"/>
                         <outlet property="consTopMenu" destination="OBc-Kb-Zn6" id="DlK-gt-T7g"/>
+                        <outlet property="consTopVStatusConnection" destination="FlB-6W-RMw" id="CWU-3d-7xh"/>
                         <outlet property="consTopVWarning" destination="YrD-I9-j5z" id="JlX-Yl-8JH"/>
+                        <outlet property="consVTopStatusTourist" destination="aij-ls-sNp" id="XZd-7k-sKB"/>
                         <outlet property="displaySegmented" destination="h5c-59-uMw" id="WQ5-81-8Td"/>
+                        <outlet property="lbStatusConnection" destination="71q-Rr-wtt" id="K8g-Pu-BQO"/>
+                        <outlet property="lbStatusTourist" destination="en1-hY-zvY" id="d8g-Pw-X35"/>
                         <outlet property="mapView" destination="nnu-iX-Y6y" id="k5G-j5-Qwv"/>
                         <outlet property="tvWarning" destination="e7d-jC-bPe" id="cej-41-Csr"/>
                         <outlet property="vBackgroundWarning" destination="ZWW-D0-OR5" id="QsI-IY-YdN"/>
                         <outlet property="vInfoPlace" destination="sju-LS-n3c" id="pDj-Pg-m7P"/>
                         <outlet property="vInfoTourist" destination="5xT-6K-hI0" id="moj-sq-Lis"/>
                         <outlet property="vMenu" destination="pKz-Cb-ZUl" id="lwS-15-49i"/>
+                        <outlet property="vStatusConnection" destination="CyR-f5-Bh3" id="uSP-Be-qnf"/>
+                        <outlet property="vStatusTourist" destination="r6v-UK-dSS" id="wkS-v4-J4x"/>
                         <outlet property="vWarning" destination="yga-c7-PMx" id="c0g-FR-9ue"/>
                         <segue destination="b4z-G4-Prp" kind="push" identifier="informSegue" id="idW-IS-q3q"/>
                         <segue destination="cDh-QU-MSP" kind="show" identifier="warningSegue" id="3e1-Zt-vUQ"/>
@@ -420,7 +467,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2793" y="-562"/>
+            <point key="canvasLocation" x="2792.8000000000002" y="-562.66866566716647"/>
         </scene>
         <!--Cảnh báo-->
         <scene sceneID="5lO-Qb-HIe">
@@ -1563,7 +1610,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KxM-CV-ESO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5428" y="975.56221889055485"/>
+            <point key="canvasLocation" x="4679" y="962"/>
         </scene>
         <!--My Tours View Controller-->
         <scene sceneID="783-ye-PGU">
@@ -1608,7 +1655,7 @@
                                                             <rect key="frame" x="161" y="93" width="53" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3w-2n-U7H">
-                                                                    <rect key="frame" x="12" y="6.5" width="29" height="17"/>
+                                                                    <rect key="frame" x="12" y="7" width="29" height="17"/>
                                                                     <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="12"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -1661,7 +1708,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F5-iK-h29">
-                                        <rect key="frame" x="169.5" y="31" width="36" height="22"/>
+                                        <rect key="frame" x="170" y="31" width="36" height="22"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -1729,19 +1776,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duc Nguyen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VSQ-ML-QyF">
-                                        <rect key="frame" x="77" y="18" width="79.5" height="19.5"/>
+                                        <rect key="frame" x="77" y="18" width="80" height="20"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                         <color key="textColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, How are you !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tx4-N4-dvb">
-                                        <rect key="frame" x="77" y="39.5" width="111.5" height="16.5"/>
+                                        <rect key="frame" x="77" y="40" width="112" height="17"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2:30 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYu-eq-Rmy">
-                                        <rect key="frame" x="291.5" y="20" width="41.5" height="13"/>
+                                        <rect key="frame" x="291" y="20" width="42" height="13"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="11"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1792,19 +1839,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nhat Nguyen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZsA-gn-l1e">
-                                        <rect key="frame" x="77" y="18" width="86" height="19.5"/>
+                                        <rect key="frame" x="77" y="18" width="86" height="20"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                         <color key="textColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You want to hang out with me..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HY4-J7-dYo">
-                                        <rect key="frame" x="77" y="39.5" width="177" height="16.5"/>
+                                        <rect key="frame" x="77" y="40" width="177" height="17"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:30 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7g-7Y-RE6">
-                                        <rect key="frame" x="291.5" y="20" width="41.5" height="13"/>
+                                        <rect key="frame" x="291" y="20" width="42" height="13"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="11"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1885,13 +1932,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Khung bo tai Thai Lan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXy-mU-59U">
-                                        <rect key="frame" x="55" y="18" width="232.5" height="19.5"/>
+                                        <rect key="frame" x="55" y="18" width="232" height="20"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                         <color key="textColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="10 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sx6-oC-xiJ">
-                                        <rect key="frame" x="299.5" y="20" width="33.5" height="13"/>
+                                        <rect key="frame" x="299" y="20" width="34" height="13"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="11"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1938,13 +1985,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Ngap lut tai Tp Ho Chi Minh - Quan 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbr-LT-Reu">
-                                        <rect key="frame" x="55" y="18" width="232.5" height="19.5"/>
+                                        <rect key="frame" x="55" y="18" width="232" height="20"/>
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                         <color key="textColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="10 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjt-yD-nGA">
-                                        <rect key="frame" x="299.5" y="20" width="33.5" height="13"/>
+                                        <rect key="frame" x="299" y="20" width="34" height="13"/>
                                         <fontDescription key="fontDescription" name="Raleway-Medium" family="Raleway" pointSize="11"/>
                                         <color key="textColor" red="0.63137254899999995" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2151,7 +2198,7 @@
                                                                                         <rect key="frame" x="109" y="89" width="157" height="30"/>
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30 20/11 - 20:30 26/11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8N-DI-lNA">
-                                                                                                <rect key="frame" x="12" y="6.5" width="133" height="17"/>
+                                                                                                <rect key="frame" x="12" y="7" width="133" height="17"/>
                                                                                                 <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="12"/>
                                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
@@ -2735,7 +2782,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                             <constraint firstAttribute="height" constant="1" id="6QD-Fo-iSp"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MFc-NC-sNS">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MFc-NC-sNS">
                                                         <rect key="frame" x="0.0" y="2" width="245" height="36"/>
                                                         <color key="textColor" red="0.5141925812" green="0.51420515779999998" blue="0.51419842240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
@@ -2772,7 +2819,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                         <rect key="frame" x="0.0" y="39" width="245" height="1"/>
                                                         <color key="backgroundColor" red="0.34510067109999998" green="0.34510952230000003" blue="0.34510475400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </view>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adk-F8-KMy">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mật khẩu" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adk-F8-KMy">
                                                         <rect key="frame" x="0.0" y="2" width="245" height="36"/>
                                                         <color key="textColor" red="0.5141925812" green="0.51420515779999998" blue="0.51419842240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
@@ -2809,7 +2856,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                             <constraint firstAttribute="height" constant="1" id="4uY-xW-RA4"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Re-type password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gr6-jg-f8T">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Xác nhận mật khẩu" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gr6-jg-f8T">
                                                         <rect key="frame" x="0.0" y="2" width="245" height="36"/>
                                                         <color key="textColor" red="0.5141925812" green="0.51420515779999998" blue="0.51419842240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
@@ -2846,20 +2893,21 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IjR-fl-SCW">
                                                 <rect key="frame" x="0.0" y="357" width="375" height="92"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By Signing up your are agreeing to our" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgz-I1-NQe">
-                                                        <rect key="frame" x="81" y="8" width="214" height="17"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Việc đăng ký bạn sẽ đồng ý các" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgz-I1-NQe">
+                                                        <rect key="frame" x="102" y="8" width="172" height="17"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                                         <color key="textColor" red="0.34510067109999998" green="0.34510952230000003" blue="0.34510475400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hmJ-rA-0yt">
-                                                        <rect key="frame" x="90" y="25" width="196" height="26"/>
+                                                        <rect key="frame" x="109" y="25" width="157" height="26"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
-                                                                <fragment content="Term of Service ">
+                                                                <fragment content="Điều Khoản ">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <font key="NSFont" metaFont="cellTitle"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -2868,18 +2916,21 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                                         <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <font key="NSFont" metaFont="cellTitle"/>
                                                                         <font key="NSOriginalFont" metaFont="system" size="14.5"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
                                                                 <fragment content=" ">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <font key="NSFont" metaFont="cellTitle"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
-                                                                <fragment content="Privacy Policy">
+                                                                <fragment content="Chính Sách">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <font key="NSFont" metaFont="cellTitle"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                         <integer key="NSUnderline" value="1"/>
                                                                     </attributes>
                                                                 </fragment>
@@ -2982,14 +3033,14 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQj-1b-UrZ">
                                         <rect key="frame" x="0.0" y="140" width="375" height="314"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="and" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-W2-wuP">
-                                                <rect key="frame" x="182" y="282" width="22" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="và" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-W2-wuP">
+                                                <rect key="frame" x="186" y="282" width="13" height="17"/>
                                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.79370701310000003" blue="0.5406031013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By Signing in you are agreeing to our" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7V-6n-cQa">
-                                                <rect key="frame" x="85" y="260" width="205" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Việc đăng nhập bạn sẽ đồng ý các" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7V-6n-cQa">
+                                                <rect key="frame" x="94" y="260" width="188" height="17"/>
                                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.79370701310000003" blue="0.5406031013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3008,12 +3059,13 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnB-Q8-fhD">
-                                                <rect key="frame" x="91" y="284" width="89" height="15"/>
+                                                <rect key="frame" x="119" y="284" width="65" height="15"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="Term of Service">
+                                                    <fragment content="Điều Khoản">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" metaFont="cellTitle"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             <integer key="NSUnderline" value="1"/>
                                                         </attributes>
                                                     </fragment>
@@ -3021,12 +3073,13 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxp-MU-Dwt">
-                                                <rect key="frame" x="206" y="284" width="79" height="15"/>
+                                                <rect key="frame" x="201" y="284" width="63" height="15"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="Privacy Policy">
+                                                    <fragment content="Chính sách">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.79370701313018799" blue="0.54060310125350952" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" metaFont="cellTitle"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             <integer key="NSUnderline" value="1"/>
                                                         </attributes>
                                                     </fragment>
@@ -3041,7 +3094,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efI-B8-F6T">
-                                                <rect key="frame" x="91" y="260" width="194" height="39"/>
+                                                <rect key="frame" x="119" y="260" width="145" height="39"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQY-3c-aEc">
                                                 <rect key="frame" x="65" y="96.5" width="245" height="40"/>
@@ -3056,7 +3109,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                             <constraint firstAttribute="height" constant="1" id="CYg-Hz-0q1"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-Dh-Tib">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mật khẩu" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-Dh-Tib">
                                                         <rect key="frame" x="0.0" y="2" width="245" height="36"/>
                                                         <color key="textColor" red="0.5141925812" green="0.51420515779999998" blue="0.51419842240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
@@ -3093,7 +3146,7 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                                         <rect key="frame" x="0.0" y="39" width="245" height="1"/>
                                                         <color key="backgroundColor" red="0.34510067109999998" green="0.34510952230000003" blue="0.34510475400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </view>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Q3-Rd-Mas">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Q3-Rd-Mas">
                                                         <rect key="frame" x="0.0" y="2" width="245" height="36"/>
                                                         <color key="textColor" red="0.5141925812" green="0.51420515779999998" blue="0.51419842240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
@@ -3148,8 +3201,8 @@ Buổi trưa:  Dùng cơm trưa, nhận phòng khách sạn nghỉ ngơi. Quý k
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2C-nK-pOH">
                                         <rect key="frame" x="0.0" y="575" width="375" height="92"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chưa có tài khoản TourGuide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxP-D3-OmU">
-                                                <rect key="frame" x="89" y="8" width="197" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Không có tài khoản Tourguide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxP-D3-OmU">
+                                                <rect key="frame" x="87" y="8" width="202" height="20"/>
                                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14.5"/>
                                                 <color key="textColor" red="0.34510067109999998" green="0.34510952230000003" blue="0.34510475400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
