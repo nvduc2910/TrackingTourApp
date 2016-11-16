@@ -23,7 +23,14 @@ public enum StatusConnection {
 class MapViewController: BaseViewController {
 
     @IBOutlet weak var vStatusConnection: ViewRoundCorner!
+    @IBOutlet weak var vPopupWarningInfo: ButtonRoundCorner!
 
+    @IBAction func warningDetail(_ sender: Any) {
+    }
+    @IBOutlet weak var lbDescriptionWarning: UILabel!
+    @IBOutlet weak var lbWarningPriority: UILabel!
+    @IBOutlet weak var lbCategoryWarning: UILabel!
+    @IBOutlet weak var lbWarningName: UILabel!
     @IBOutlet weak var consVTopStatusTourist: NSLayoutConstraint!
     @IBOutlet weak var lbStatusTourist: UILabel!
     @IBOutlet weak var vStatusTourist: UIView!
@@ -82,8 +89,6 @@ class MapViewController: BaseViewController {
     }
     
     
-    
-    
     func InitView()
     {
         tvWarning.layer.borderColor = UIColor.lightGray.cgColor
@@ -104,15 +109,15 @@ class MapViewController: BaseViewController {
     }
     
     @IBAction func hiddenMenu(_ sender: Any) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        UIView.animate(withDuration: 0.3, animations:
-            {
-                self.consTopMenu.constant = -536
-                self.view.layoutIfNeeded()
-                
-        })
-        
-        alertDisconnection(receiver: "MG_" + String(describing: self.tour.managerId!), sender: "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), senderUserName: Singleton.sharedInstance.tourguide.name!)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        UIView.animate(withDuration: 0.3, animations:
+//            {
+//                self.consTopMenu.constant = -536
+//                self.view.layoutIfNeeded()
+//                
+//        })
+//        
+//        alertDisconnection(receiver: "MG_" + String(describing: self.tour.managerId!), sender: "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), senderUserName: Singleton.sharedInstance.tourguide.name!)
         
         
         SwiftR.stopAll()
@@ -222,12 +227,12 @@ class MapViewController: BaseViewController {
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if self.displaySegmented.selectedSegmentIndex == 0{
-//            let placeDetailsVC = segue.destination as! PlaceDetailsViewController
-//            placeDetailsVC.place = markerSelected as! Place
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if self.displaySegmented.selectedSegmentIndex == 0{
+            let placeDetailsVC = segue.destination as! PlaceDetailsViewController
+            placeDetailsVC.place = markerSelected as! Place
+        }
+    }
     
     
    
@@ -246,7 +251,7 @@ class MapViewController: BaseViewController {
         
         connection = SwiftR.connect(urlServerRealtime) { [weak self]
             connection in
-            connection.queryString = ["USER_POSITION" : "TG", "MANAGER_ID" : "MG_" + String(describing: (self?.tour.managerId!)!) , "USER_ID" : "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!)]
+            connection.queryString = ["USER_POSITION" : "TG", "MANAGER_ID" : "MG_" + String(describing: (self?.tour.managerId!)!) , "USER_ID" : "TG_" + String(describing: Singleton.sharedInstance.tourguide.tourGuideId!), "USER_NAME" : String(describing: Singleton.sharedInstance.tourguide.name!)]
             self?.tourguideHub = connection.createHubProxy("hubServer")
             
             self?.tourguideHub?.on("broadcastMessage") { args in
@@ -274,6 +279,21 @@ class MapViewController: BaseViewController {
                 self?.touristConnected(usernameTourist: touristName)
                 
             }
+            
+            self?.tourguideHub?.on("managerOnline"){ args in
+                self?.initCurrentLocation(receiver: "MG_" + String(describing: (self?.tour.managerId)!), tourguide: Singleton.sharedInstance.tourguide!, tour: (self?.tour)!)
+            }
+            
+            self?.tourguideHub?.on("receiverWarning"){ args in
+               
+                let objectData: AnyObject = args![0] as AnyObject!
+                
+                
+                var warningData = Warning(categoryWarning: objectData[0] as! String, distance: objectData[1] as! String, lat: objectData[2] as! String, long: objectData[3] as! String, warningName: objectData[3] as! String, description: objectData[4] as! String)
+                
+            }
+            
+            
             
         }
         connection?.starting = { [weak self] in                                                                                                                                                                                                                                                                                                                                                     
@@ -447,6 +467,8 @@ class MapViewController: BaseViewController {
         let senderId =  Singleton.sharedInstance.tourguide!.tourGuideId
         tourguideHub?.invoke("updatePositionTourGuide", arguments: [senderId, latitude, longitude, receiver])
     }
+    
+    
     
     // MARK: Tourist 
     

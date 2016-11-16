@@ -24,9 +24,12 @@ class Test: UIViewController, UIScrollViewDelegate {
 
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
         let page = sclMain.contentOffset.x / sclMain.frame.width
+        
         updateHightlight(page: integer_t(page))
     }
+    
     
     
     

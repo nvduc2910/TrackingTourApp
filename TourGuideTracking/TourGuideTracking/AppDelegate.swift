@@ -59,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        
+        
     
 //        let mapViewController = MapViewController(nibName: "MapViewController", bundle: nil)
 //        
